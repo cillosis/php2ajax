@@ -4,16 +4,16 @@
 ** Object Oriented Interface for PHP and AJAX **
 ************************************************
 
-   In order to simplify operations between ajax and PHP, I
-created the php2ajax class library. It's purpose
-is to provide a simple, object oriented approach, to
-using PHP and AJAX that is flexible and lightweight while still
+   In order to simplify operations between ajax and PHP, I 
+created the php2ajax class library. It's purpose 
+is to provide a simple, object oriented approach, to 
+using PHP and AJAX that is flexible and lightweight while still 
 providing core capabilities.
 
-With php2ajax, once you get the request using getRequest(), it is simple
-to access your variables as though they are properties of the php2ajax object.
-As an example, if in your ajax request using jQuery you sent data: "name=tom&age=25"
-you could access those values using your PHP object like $php2ajax->name and 
+With php2ajax, once you get the request using getRequest(), it is simple 
+to access your variables as though they are properties of the php2ajax object. 
+As an example, if in your ajax request using jQuery you sent data: "name=tom&age=25" 
+you could access those values using your PHP object like $php2ajax->name and
 $php2ajax->age.
 
 ***********************
@@ -27,24 +27,24 @@ it will save a copy within the php2ajax object for further processing as well as
 flags. If GET or POST is set, the hasRequest flag will be set to true. For each
 specific method, either the hasGET or hasPOST flags will be set to true.
 	
-			getRequest() Example #1
-			***********************
+		getRequest() Example #1
+		***********************
 
-			// Create new object
-			$php2ajax = new php2Ajax;
+		// Create new object
+		$php2ajax = new php2Ajax;
 
-			// Get request
-			$php2ajax->getRequest();
+		// Get request
+		$php2ajax->getRequest();
 
-			// Check request
-			if( $php2ajax->hasRequest )
-			{
-				echo("Either a GET or POST request was made.");
-			}
+		// Check request
+		if( $php2ajax->hasRequest )
+		{
+			echo("Either a GET or POST request was made.");
+		}
 				
 filter($filters)
 ****************
-   Allows extremly customizable filtering/sanitizing of variables passed via GET and POST. The
+   Allows extremly customizable filtering/sanitizing of variables passed via GET and POST. The 
 $filters parameter must be an array containing names of functions to run on each variable. The
 functions can be PHP core functions such as trim(), strip_tags(), and strtoupper() or can be a custom
 function you write to do your own filtering and sanitizing. This only accepts functions which
@@ -52,51 +52,51 @@ take a scalar variable as a parameter, process it, and then return the modified 
 a function which requires multiple parameters such as str_replace() will not work. In this case,
 write a custom function which calls those other functions like the example below.
 				
-				filter() Example #1
-				*******************	
-				public function myCustomFilter($data)
-				{
-					// Call function requiring multiple parameters
-					// to replace spaces with a hyphen
-					return str_replace(" ", "-", $data);
-				}
+		filter() Example #1
+		*******************	
+		public function myCustomFilter($data)
+		{
+			// Call function requiring multiple parameters
+			// to replace spaces with a hyphen
+			return str_replace(" ", "-", $data);
+		}
 
-				...
+		...
 
-				// Check request
-				if( $php2ajax->hasRequest )
-				{
-					// Run filters using PHP core functions and custom functions
-					$php2ajax->filter( Array("trim","strtoupper","strip_tags","myCustomFilter") );
-				}
+		// Check request
+		if( $php2ajax->hasRequest )
+		{
+			// Run filters using PHP core functions and custom functions
+			$php2ajax->filter( Array("trim","strtoupper","strip_tags","myCustomFilter") );
+		}
 				
 save($dataHandlerObject,$saveMethod)
 ************************************
    The save() method allows you to pass GET/POST variables to your preferred data handling
 object or model to be saved. The first parameter must be an object instance. The second method is a string
 matching the name of a callable function within that object.
-				
-   Your custom data handling function must take php2ajax as a parameter.  
-				
-				save() Example #1
-				*****************
-				class MyDatabase
-				{
-					public function insert($php2ajax)
-					{
-						// Insert data into database
-						// function called by php2ajax::save()
-					}
-				}
-								
-								
-				// Database object
-				$myDB = new MyDatabase;
 
-				// Check request
-				if( $php2ajax->hasRequest )
-				{
-					// Save
-					$php2ajax->save($myDB,'insert');
-				}
+   Your custom data handling function must take php2ajax as a parameter.
+				
+		save() Example #1
+		*****************
+		class MyDatabase
+		{
+			public function insert($php2ajax)
+			{
+				// Insert data into database
+				// function called by php2ajax::save()
+			}
+		}
+						
+						
+		// Database object
+		$myDB = new MyDatabase;
+
+		// Check request
+		if( $php2ajax->hasRequest )
+		{
+			// Save
+			$php2ajax->save($myDB,'insert');
+		}
 				
