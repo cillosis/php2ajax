@@ -44,59 +44,61 @@ specific method, either the hasGET or hasPOST flags will be set to true.
 				
 filter($filters)
 ****************
-   Allows extremly customizable filtering/sanitizing of variables passed via GET and POST. The 
-$filters parameter must be an array containing names of functions to run on each variable. The
-functions can be PHP core functions such as trim(), strip_tags(), and strtoupper() or can be a custom
-function you write to do your own filtering and sanitizing. This only accepts functions which
-take a scalar variable as a parameter, process it, and then return the modified data. Therefore,
-a function which requires multiple parameters such as str_replace() will not work. In this case,
-write a custom function which calls those other functions like the example below.
+   Allows extremly customizable filtering/sanitizing of variables passed via 
+GET and POST. The $filters parameter must be an array containing names of 
+functions to run on each variable. The functions can be PHP core functions such 
+as trim(), strip_tags(), and strtoupper() or can be a custom function you 
+write to do your own filtering and sanitizing. This only accepts functions which 
+take a scalar variable as a parameter, process it, and then return the modified 
+data. Therefore, a function which requires multiple parameters such as 
+str_replace() will not work. In this case, write a custom function which calls 
+those other functions like the example below.
 				
-		filter() Example #1
-		*******************	
-		public function myCustomFilter($data)
-		{
-			// Call function requiring multiple parameters
-			// to replace spaces with a hyphen
-			return str_replace(" ", "-", $data);
-		}
+filter() Example #1
+*******************	
+public function myCustomFilter($data)
+{
+	// Call function requiring multiple parameters
+	// to replace spaces with a hyphen
+	return str_replace(" ", "-", $data);
+}
 
-		...
+...
 
-		// Check request
-		if( $php2ajax->hasRequest )
-		{
-			// Run filters using PHP core functions and custom functions
-			$php2ajax->filter( Array("trim","strtoupper","strip_tags","myCustomFilter") );
-		}
+// Check request
+if( $php2ajax->hasRequest )
+{
+	// Run filters using PHP core functions and custom functions
+	$php2ajax->filter( Array("trim","strtoupper","strip_tags","myCustomFilter") );
+}
 				
 save($dataHandlerObject,$saveMethod)
 ************************************
-   The save() method allows you to pass GET/POST variables to your preferred data handling
-object or model to be saved. The first parameter must be an object instance. The second method is a string
-matching the name of a callable function within that object.
-
-   Your custom data handling function must take php2ajax as a parameter.
+   The save() method allows you to pass GET/POST variables to your preferred 
+data handling object or model to be saved. The first parameter must be an 
+object instance. The second method is a string matching the name of a callable 
+function within that object. Your custom data handling function must take 
+php2ajax as a parameter.
 				
-		save() Example #1
-		*****************
-		class MyDatabase
-		{
-			public function insert($php2ajax)
-			{
-				// Insert data into database
-				// function called by php2ajax::save()
-			}
-		}
-						
-						
-		// Database object
-		$myDB = new MyDatabase;
+save() Example #1
+*****************
+class MyDatabase
+{
+	public function insert($php2ajax)
+	{
+		// Insert data into database
+		// function called by php2ajax::save()
+	}
+}
+				
+				
+// Database object
+$myDB = new MyDatabase;
 
-		// Check request
-		if( $php2ajax->hasRequest )
-		{
-			// Save
-			$php2ajax->save($myDB,'insert');
-		}
+// Check request
+if( $php2ajax->hasRequest )
+{
+	// Save
+	$php2ajax->save($myDB,'insert');
+}
 				
