@@ -27,20 +27,20 @@ it will save a copy within the php2ajax object for further processing as well as
 flags. If GET or POST is set, the hasRequest flag will be set to true. For each
 specific method, either the hasGET or hasPOST flags will be set to true.
 	
-		getRequest() Example #1
-		***********************
+	getRequest() Example #1
+	***********************
 
-		// Create new object
-		$php2ajax = new php2Ajax;
+	// Create new object
+	$php2ajax = new php2Ajax;
 
-		// Get request
-		$php2ajax->getRequest();
+	// Get request
+	$php2ajax->getRequest();
 
-		// Check request
-		if( $php2ajax->hasRequest )
-		{
-			echo("Either a GET or POST request was made.");
-		}
+	// Check request
+	if( $php2ajax->hasRequest )
+	{
+		echo("Either a GET or POST request was made.");
+	}
 				
 filter($filters)
 ****************
@@ -54,23 +54,23 @@ data. Therefore, a function which requires multiple parameters such as
 str_replace() will not work. In this case, write a custom function which calls 
 those other functions like the example below.
 				
-filter() Example #1
-*******************	
-public function myCustomFilter($data)
-{
-	// Call function requiring multiple parameters
-	// to replace spaces with a hyphen
-	return str_replace(" ", "-", $data);
-}
+	filter() Example #1
+	*******************	
+	public function myCustomFilter($data)
+	{
+		// Call function requiring multiple parameters
+		// to replace spaces with a hyphen
+		return str_replace(" ", "-", $data);
+	}
 
-...
+	...
 
-// Check request
-if( $php2ajax->hasRequest )
-{
-	// Run filters using PHP core functions and custom functions
-	$php2ajax->filter( Array("trim","strtoupper","strip_tags","myCustomFilter") );
-}
+	// Check request
+	if( $php2ajax->hasRequest )
+	{
+		// Run filters using PHP core functions and custom functions
+		$php2ajax->filter( Array("trim","strtoupper","strip_tags","myCustomFilter") );
+	}
 				
 save($dataHandlerObject,$saveMethod)
 ************************************
@@ -82,23 +82,23 @@ php2ajax as a parameter.
 				
 save() Example #1
 *****************
-class MyDatabase
-{
-	public function insert($php2ajax)
+	class MyDatabase
 	{
-		// Insert data into database
-		// function called by php2ajax::save()
+		public function insert($php2ajax)
+		{
+			// Insert data into database
+			// function called by php2ajax::save()
+		}
 	}
-}
-				
-				
-// Database object
-$myDB = new MyDatabase;
+					
+					
+	// Database object
+	$myDB = new MyDatabase;
 
-// Check request
-if( $php2ajax->hasRequest )
-{
-	// Save
-	$php2ajax->save($myDB,'insert');
-}
+	// Check request
+	if( $php2ajax->hasRequest )
+	{
+		// Save
+		$php2ajax->save($myDB,'insert');
+	}
 				
